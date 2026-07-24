@@ -45,7 +45,7 @@ export default function Objectives() {
         <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold mb-4" style={{ backgroundColor: '#EEF2FF', color: '#635BFF' }}>
           Getting Started
         </div>
-        <h1 className="text-4xl font-bold mb-3" style={{ color: '#0A2540' }}>
+        <h1 className="text-3xl font-bold mb-3" style={{ color: '#0A2540' }}>
           Partner Solutions Lab
         </h1>
         <p className="text-xl mb-2" style={{ color: '#425466' }}>

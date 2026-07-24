@@ -171,7 +171,7 @@ export default function Sidebar() {
     }}>
       {/* Header + progress */}
       <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid #E6EBF1' }}>
-        <p style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#635BFF', marginBottom: 10 }}>
+        <p style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#635BFF', marginBottom: 10 }}>
           Partner Solutions Lab
         </p>
         <div style={{ height: 6, borderRadius: 3, backgroundColor: '#E6EBF1', overflow: 'hidden', marginBottom: 6 }}>
