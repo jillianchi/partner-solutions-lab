@@ -82,7 +82,7 @@ const { clientSecret } = await fetch('/terminal/payment-intent', {
 }).then(r => r.json());
 
 const { paymentIntent } = await terminal.collectPaymentMethod(clientSecret);
-await terminal.confirmPaymentIntent(paymentIntent);`}
+await terminal.processPayment(paymentIntent);`}
       />
 
       <Callout type="tip" title="Use the simulator if no reader available">

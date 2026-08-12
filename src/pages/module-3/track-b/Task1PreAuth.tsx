@@ -73,7 +73,8 @@ router.post('/checkout-folio', async (req, res) => {
     reservation.stripe_payment_intent_id,
     {
       amount_to_capture: actualAmount, // actual folio, e.g. 18300 = $183
-    }
+    },
+    { stripeAccount: reservation.hotel_account_id } // PI lives on the connected account
   );
 
   res.json({ status: paymentIntent.status, amount: paymentIntent.amount_received });
