@@ -27,18 +27,6 @@ export interface NavModule {
 
 export const navigation: NavModule[] = [
   {
-    id: 'ncs-iconnect',
-    label: 'NCS: iConnect Workshop',
-    items: [
-      { id: 'ncs-overview', label: 'Session Overview', path: '/ncs-iconnect/overview' },
-      { id: 'ncs-scoping', label: 'Scoping', path: '/ncs-iconnect/scoping' },
-      { id: 'ncs-stripe-in-iconnect', label: 'Stripe in iConnect', path: '/ncs-iconnect/stripe-in-iconnect' },
-      { id: 'ncs-recurring', label: 'Recurring & Billing', path: '/ncs-iconnect/recurring' },
-      { id: 'ncs-connect', label: 'Connect: When It Applies', path: '/ncs-iconnect/connect' },
-      { id: 'ncs-next-steps', label: 'Next Steps', path: '/ncs-iconnect/next-steps' },
-    ],
-  },
-  {
     id: 'getting-started',
     label: 'Getting Started',
     items: [
