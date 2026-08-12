@@ -35,6 +35,10 @@ import TrackATask3 from './pages/module-3/track-a/Task3FeeTier';
 import TrackBOverview from './pages/module-3/track-b/Overview';
 import TrackBTask1 from './pages/module-3/track-b/Task1PreAuth';
 import TrackBTask2 from './pages/module-3/track-b/Task2OffSession';
+import TrackCOverview from './pages/module-3/track-c/Overview';
+import TrackCTask1 from './pages/module-3/track-c/Task1Platform';
+import TrackCTask2 from './pages/module-3/track-c/Task2VerticalLogic';
+import TrackCTask3 from './pages/module-3/track-c/Task3Document';
 
 // Module 4 pages
 import TrackASP2 from './pages/module-4/TrackASP2';
@@ -88,6 +92,10 @@ export default function App() {
             <Route path="module-3/track-b/overview" element={<TrackBOverview />} />
             <Route path="module-3/track-b/task-1" element={<TrackBTask1 />} />
             <Route path="module-3/track-b/task-2" element={<TrackBTask2 />} />
+            <Route path="module-3/track-c/overview" element={<TrackCOverview />} />
+            <Route path="module-3/track-c/task-1" element={<TrackCTask1 />} />
+            <Route path="module-3/track-c/task-2" element={<TrackCTask2 />} />
+            <Route path="module-3/track-c/task-3" element={<TrackCTask3 />} />
             <Route path="module-4/track-a" element={<TrackASP2 />} />
             <Route path="module-4/track-b" element={<TrackBSP2 />} />
             <Route path="lab-complete" element={<WorkshopComplete />} />

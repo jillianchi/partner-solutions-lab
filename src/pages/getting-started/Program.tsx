@@ -92,6 +92,17 @@ export default function Program() {
         </div>
       </div>
 
+      {/* Certifications note */}
+      <div className="rounded-lg border px-4 py-3 mb-6 flex items-center gap-3" style={{ borderColor: '#E6EBF1', backgroundColor: '#F6F9FC' }}>
+        <ExternalLink size={14} style={{ color: '#635BFF', flexShrink: 0 }} />
+        <p className="text-xs" style={{ color: '#425466' }}>
+          <strong style={{ color: '#0A2540' }}>Stripe certifications are a prerequisite for PSP validation.</strong>{' '}
+          If you haven't completed yours yet,{' '}
+          <a href="https://stripe.com/en-gb/partners/certification" target="_blank" rel="noreferrer" style={{ color: '#635BFF' }}>get certified here</a>{' '}
+          before submitting a solution.
+        </p>
+      </div>
+
       {/* Validation requirements */}
       <h2 className="text-base font-semibold mb-3" style={{ color: '#0A2540' }}>Validation requirements</h2>
       <div className="space-y-3 mb-6">

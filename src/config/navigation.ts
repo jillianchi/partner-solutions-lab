@@ -27,6 +27,18 @@ export interface NavModule {
 
 export const navigation: NavModule[] = [
   {
+    id: 'ncs-iconnect',
+    label: 'NCS: iConnect Workshop',
+    items: [
+      { id: 'ncs-overview', label: 'Session Overview', path: '/ncs-iconnect/overview' },
+      { id: 'ncs-scoping', label: 'Scoping', path: '/ncs-iconnect/scoping' },
+      { id: 'ncs-stripe-in-iconnect', label: 'Stripe in iConnect', path: '/ncs-iconnect/stripe-in-iconnect' },
+      { id: 'ncs-recurring', label: 'Recurring & Billing', path: '/ncs-iconnect/recurring' },
+      { id: 'ncs-connect', label: 'Connect: When It Applies', path: '/ncs-iconnect/connect' },
+      { id: 'ncs-next-steps', label: 'Next Steps', path: '/ncs-iconnect/next-steps' },
+    ],
+  },
+  {
     id: 'getting-started',
     label: 'Getting Started',
     items: [
@@ -83,6 +95,16 @@ export const navigation: NavModule[] = [
           { id: 'track-b-overview', label: 'Overview', path: '/module-3/track-b/overview' },
           { id: 'track-b-1', label: '3B.1 Pre-Auth & Folio Capture', path: '/module-3/track-b/task-1', checkpoints: ['m3b-preauth-complete', 'm3b-capture-complete'] },
           { id: 'track-b-2', label: '3B.2 Off-Session Charge', path: '/module-3/track-b/task-2', checkpoints: ['m3b-offsession-complete'] },
+        ],
+      },
+      {
+        id: 'track-c',
+        label: 'Track C: Bring Your Own',
+        pages: [
+          { id: 'track-c-overview', label: 'Define Your Scenario', path: '/module-3/track-c/overview', checkpoints: ['m3c-scenario-defined'] },
+          { id: 'track-c-1', label: '3C.1 Platform Structure', path: '/module-3/track-c/task-1', checkpoints: ['m3c-platform-defined'] },
+          { id: 'track-c-2', label: '3C.2 Vertical Logic', path: '/module-3/track-c/task-2', checkpoints: ['m3c-vertical-logic-built'] },
+          { id: 'track-c-3', label: '3C.3 Document Your Accelerator', path: '/module-3/track-c/task-3', checkpoints: ['m3c-decisions-documented'] },
         ],
       },
     ],
