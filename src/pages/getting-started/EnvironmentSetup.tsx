@@ -30,12 +30,9 @@ export default function EnvironmentSetup() {
         <CodeBlock
           language="bash"
           filename="Terminal"
-          code={`git clone https://github.com/stripe-samples/partner-solutions-lab-starter.git
+          code={`git clone https://github.com/jillianchi/partner-solutions-lab-starter.git
 cd partner-solutions-lab-starter`}
         />
-        <Callout type="info" title="Starter repo URL">
-          The final GitHub URL will be shared by the Stripe team before the lab. If self-pacing, check with your Stripe partner manager.
-        </Callout>
         <Checkpoint
           id="gs-repo-cloned"
           label="Repository cloned and directory opened"
@@ -101,13 +98,13 @@ NODE_ENV=development`}
           language="bash"
           filename="Terminal"
           code={`curl localhost:3000/health
-# Expected: { "status": "ok", "stripe": "connected" }`}
+# Expected: { "ok": true }`}
         />
         <p className="text-sm mb-2 mt-3" style={{ color: '#425466' }}>In a separate terminal, start the Stripe CLI webhook listener:</p>
         <CodeBlock
           language="bash"
           filename="Terminal (tab 2)"
-          code={`stripe listen --forward-to localhost:3000/webhook`}
+          code={`stripe listen --forward-to localhost:3000/webhooks`}
         />
         <Checkpoint
           id="gs-server-running"
