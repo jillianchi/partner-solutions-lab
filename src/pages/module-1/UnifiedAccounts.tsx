@@ -257,6 +257,37 @@ export default function UnifiedAccounts() {
         </div>
       </div>
 
+      <h2 className="text-xl font-semibold mb-3" style={{ color: '#0A2540' }}>UA configuration shorthand</h2>
+      <p className="text-sm mb-3" style={{ color: '#425466' }}>
+        You'll see PNP, PEP, and PNS used as shorthand throughout the lab. Each letter maps to a dimension of your configuration:
+      </p>
+      <div className="rounded-xl border overflow-hidden mb-6 bg-white" style={{ borderColor: '#E6EBF1' }}>
+        <table className="w-full text-sm">
+          <thead>
+            <tr style={{ backgroundColor: '#F6F9FC', borderBottom: '1px solid #E6EBF1' }}>
+              <th className="text-left px-4 py-2 font-semibold" style={{ color: '#0A2540' }}>Acronym</th>
+              <th className="text-left px-4 py-2 font-semibold" style={{ color: '#0A2540' }}>Pricing</th>
+              <th className="text-left px-4 py-2 font-semibold" style={{ color: '#0A2540' }}>Merchant dashboard</th>
+              <th className="text-left px-4 py-2 font-semibold" style={{ color: '#0A2540' }}>Loss liability</th>
+            </tr>
+          </thead>
+          <tbody style={{ color: '#425466' }}>
+            {[
+              ['PNP', 'Platform (buy-rate)', 'None', 'Platform'],
+              ['PEP', 'Platform (buy-rate)', 'Express dashboard', 'Platform'],
+              ['PNS', 'Platform (buy-rate)', 'None', 'Stripe'],
+            ].map(([acronym, pricing, dashboard, liability]) => (
+              <tr key={acronym} style={{ borderBottom: '1px solid #E6EBF1' }}>
+                <td className="px-4 py-2 font-bold" style={{ color: '#635BFF' }}>{acronym}</td>
+                <td className="px-4 py-2">{pricing}</td>
+                <td className="px-4 py-2">{dashboard}</td>
+                <td className="px-4 py-2">{liability}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <Callout type="decision" title="Your DECISIONS.md starts here">
         When you begin building, your first task is to justify these choices for your specific client. A restaurant platform and a hotel group will likely make different decisions — especially on risk and dashboard. Document your reasoning. That's the IP of your accelerator.
       </Callout>

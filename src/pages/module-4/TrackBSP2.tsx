@@ -51,8 +51,8 @@ export default function TrackBSP2() {
         ))}
       </div>
 
-      <Callout type="warning" title="TODO: Complete this module">
-        This module contains the SP2 pitch framework. For self-pacing, prepare a 5-minute pitch covering the four components above, then simulate a dispute resolution to demonstrate the Express Dashboard value.
+      <Callout type="tip" title="Preparing your 5-minute pitch">
+        Structure it as: (1) problem statement — 30 seconds, (2) architecture walkthrough — 2 minutes, (3) live demo of one flow (pre-auth → folio capture or dispute resolution) — 90 seconds, (4) why this is repeatable — 30 seconds. The Express Dashboard demo is your differentiator — show property-level financial visibility.
       </Callout>
 
       <Checkpoint

@@ -50,7 +50,7 @@ export default function ModuleReview() {
           },
           {
             q: 'Your client wants merchants to have no Stripe Dashboard access but wants Stripe to bear fraud liability. Which UA config?',
-            a: 'PNS — Platform pricing, No dashboard, Stripe liability.',
+            a: 'PNS — Platform pricing (buy-rate), No merchant dashboard, Stripe bears loss liability. Compare: PNP is the same but Platform bears liability; PEP gives merchants an Express dashboard with Platform liability.',
           },
           {
             q: 'What is the difference between a connection token and a client secret in Terminal?',

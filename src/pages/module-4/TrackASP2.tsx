@@ -51,8 +51,8 @@ export default function TrackASP2() {
         ))}
       </div>
 
-      <Callout type="warning" title="TODO: Complete this module">
-        This module contains the SP2 pitch framework. The Stripe team will walk through the pitch structure during the facilitated session. For self-pacing, prepare a 5-minute pitch covering the four components above, referencing your implementation from Modules 2 and 3A.
+      <Callout type="tip" title="Preparing your 5-minute pitch">
+        Structure it as: (1) problem statement — 30 seconds, (2) architecture walkthrough — 2 minutes, (3) live demo of one flow — 90 seconds, (4) why this is repeatable — 30 seconds. The goal is to show it's a deployable accelerator, not a one-off implementation.
       </Callout>
 
       <Checkpoint

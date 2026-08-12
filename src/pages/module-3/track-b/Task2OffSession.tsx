@@ -28,20 +28,27 @@ export default function TrackBTask2() {
 
       <h2 className="text-xl font-semibold mb-3" style={{ color: '#0A2540' }}>Step 1: Save the Card at Check-In</h2>
       <p className="text-sm mb-3" style={{ color: '#425466' }}>
-        When creating the check-in PaymentIntent, also create a <code className="text-xs px-1 py-0.5 rounded" style={{ backgroundColor: '#EEF2FF', color: '#533AFD' }}>SetupIntent</code> to save the card for future use.
+        The cleanest approach is to add <code className="text-xs px-1 py-0.5 rounded" style={{ backgroundColor: '#EEF2FF', color: '#533AFD' }}>setup_future_usage: 'off_session'</code> directly to the check-in PaymentIntent from Task 3B.1 — Stripe will save the payment method to the customer automatically after it's confirmed.
       </p>
       <CodeBlock
         language="javascript"
-        filename="server/routes/checkin.js (add to check-in flow)"
-        code={`// Save card for off-session charges
-const setupIntent = await stripe.setupIntents.create({
-  customer: guest.stripe_customer_id,
-  payment_method: paymentMethodId,
-  confirm: true,
-  usage: 'off_session',
-});
+        filename="server/routes/checkin.js (update check-in PaymentIntent)"
+        code={`// Add to the check-in PaymentIntent from Task 3B.1
+const paymentIntent = await stripe.paymentIntents.create(
+  {
+    amount: estimatedAmount,
+    currency: 'sgd',
+    payment_method: paymentMethodId,
+    capture_method: 'manual',
+    confirm: true,
+    setup_future_usage: 'off_session', // <-- saves card for incidentals
+    application_fee_amount: Math.round(estimatedAmount * 0.025),
+    transfer_data: { destination: hotelAccountId },
+  },
+  { stripeAccount: hotelAccountId }
+);
 
-// Store the payment method ID
+// Store the payment method ID for later off-session charges
 await db.guests.update({ id: guestId }, {
   saved_payment_method_id: paymentMethodId,
 });`}
@@ -56,16 +63,19 @@ await db.guests.update({ id: guestId }, {
   // const guest = await db.guests.findById(guestId)
 
   // TODO: Create off-session PaymentIntent
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount,
-    currency: 'sgd',
-    customer: guest.stripe_customer_id,
-    payment_method: guest.saved_payment_method_id,
-    off_session: true,    // Indicates guest is not present
-    confirm: true,        // Confirm immediately
-    application_fee_amount: Math.round(amount * 0.025),
-    transfer_data: { destination: hotelAccountId },
-  });
+  const paymentIntent = await stripe.paymentIntents.create(
+    {
+      amount,
+      currency: 'sgd',
+      customer: guest.stripe_customer_id,
+      payment_method: guest.saved_payment_method_id,
+      off_session: true,    // Indicates guest is not present
+      confirm: true,        // Confirm immediately
+      application_fee_amount: Math.round(amount * 0.025),
+      transfer_data: { destination: hotelAccountId },
+    },
+    { stripeAccount: hotelAccountId } // PI must be created on the connected account
+  );
 
   res.json({ paymentIntentId: paymentIntent.id, status: paymentIntent.status });
 });`}

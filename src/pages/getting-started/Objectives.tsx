@@ -14,7 +14,7 @@ const outcomes = [
   'A working Checkout Session with destination charges and platform fee capture',
   'An in-person Terminal payment routed to the correct connected account',
   'A webhook handler that drives reconciliation across your platform',
-  'Vertical-specific payment logic — F&B payout flows or hotel pre-auth and folio capture',
+  'Vertical-specific payment logic — F&B payout flows, hotel pre-auth and folio capture, or your own client scenario',
   'A documented set of architectural decisions (your DECISIONS.md) — a reusable reference you can take into the next client engagement with the same problem',
 ];
 
@@ -69,12 +69,12 @@ export default function Objectives() {
         </div>
       </div>
 
-      {/* Two tracks */}
+      {/* Three tracks */}
       <h2 className="text-xl font-semibold mb-3" style={{ color: '#0A2540' }}>Choose your track</h2>
       <p className="text-sm mb-4" style={{ color: '#425466' }}>
-        Both tracks build on the same Stripe architecture. Pick the vertical that matches your client experience. Modules 1 and 2 are shared — tracks diverge in Module 3.
+        All tracks build on the same Stripe architecture. Modules 1 and 2 are shared — tracks diverge in Module 3.
       </p>
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-3 gap-4 mb-8">
         <div className="rounded-xl border p-5 bg-white" style={{ borderColor: '#E6EBF1' }}>
           <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: '#EEF2FF' }}>
             <span className="text-sm font-bold" style={{ color: '#635BFF' }}>A</span>
@@ -103,6 +103,22 @@ export default function Objectives() {
           <div className="flex flex-wrap gap-1">
             {['Destination charges', 'Terminal', 'Pre-auth', 'Off-session'].map(tag => (
               <span key={tag} className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#EEF2FF', color: '#635BFF' }}>{tag}</span>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-xl border p-5 bg-white" style={{ borderColor: '#E6EBF1' }}>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: '#F0FFF4' }}>
+            <span className="text-sm font-bold" style={{ color: '#16A34A' }}>C</span>
+          </div>
+          <h3 className="font-semibold mb-1" style={{ color: '#0A2540' }}>Track C — Bring Your Own</h3>
+          <p className="text-xs mb-3" style={{ color: '#16A34A', fontWeight: 500 }}>Your vertical · Real client scenario</p>
+          <p className="text-sm mb-3" style={{ color: '#425466' }}>
+            Have a real client context? Design and build against your own vertical. Your DECISIONS.md becomes the artifact — a reusable accelerator for that industry.
+          </p>
+          <div className="flex flex-wrap gap-1">
+            {['Your vertical', 'DECISIONS.md', 'Accelerator design'].map(tag => (
+              <span key={tag} className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: '#F0FFF4', color: '#16A34A' }}>{tag}</span>
             ))}
           </div>
         </div>
@@ -162,7 +178,7 @@ export default function Objectives() {
       <Checkpoint
         id="gs-objectives-read"
         label="I've read the objectives and chosen my track"
-        description="Which track are you following — TableOS (F&B) or Kalapa Hotels (Hospitality)?"
+        description="Which track are you following — TableOS (A), Kalapa Hotels (B), or your own vertical (C)?"
       />
 
       <PageNav prevPage={prevPage} nextPage={nextPage} />

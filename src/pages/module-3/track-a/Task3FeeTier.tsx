@@ -78,6 +78,7 @@ export function calculatePlatformFee(amount, monthlyGmvCents) {
 async function getMonthlyGmv(stripeAccountId) {
   const startOfMonth = Math.floor(new Date(new Date().getFullYear(), new Date().getMonth(), 1) / 1000);
 
+  // autoPagingToArray handles merchants with >100 transactions in a month
   const transactions = await stripe.balanceTransactions.list(
     {
       type: 'payment',
@@ -85,9 +86,9 @@ async function getMonthlyGmv(stripeAccountId) {
       limit: 100,
     },
     { stripeAccount: stripeAccountId }
-  );
+  ).autoPagingToArray({ limit: 10000 });
 
-  return transactions.data.reduce((sum, tx) => sum + tx.amount, 0);
+  return transactions.reduce((sum, tx) => sum + tx.amount, 0);
 }`}
       />
 

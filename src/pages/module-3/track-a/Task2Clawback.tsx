@@ -53,7 +53,7 @@ export default function TrackATask2() {
         <p className="mb-1">Two parameters control what gets clawed back:</p>
         <ul className="space-y-1">
           <li><strong>reverse_transfer: true</strong> — reverses the funds transferred to the connected account (they pay back the net amount)</li>
-          <li><strong>refund_application_fee: true</strong> — refunds the platform fee back to the connected account (platform absorbs the fee)</li>
+          <li><strong>refund_application_fee: true</strong> — the platform fee is returned to the customer as part of the refund (the platform forgoes its fee income on this transaction)</li>
         </ul>
         <p className="mt-2">For a full refund where the platform absorbs no cost, use both. For a partial platform goodwill refund, omit <code>refund_application_fee</code>.</p>
       </Callout>
