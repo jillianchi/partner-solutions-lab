@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react'; // v2
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useProgress } from './hooks/useProgress';
 import Layout from './components/Layout';
