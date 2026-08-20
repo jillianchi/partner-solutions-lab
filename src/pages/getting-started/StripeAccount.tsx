@@ -25,8 +25,8 @@ export default function StripeAccount() {
       <h2 className="text-xl font-semibold mb-4" style={{ color: '#0A2540' }}>Features Enabled on Your Account</h2>
       <div className="grid grid-cols-2 gap-3 mb-6">
         {[
-          { icon: Shield, title: 'v2 Accounts API', detail: '/v2/core/accounts — the new unified account creation endpoint', color: '#635BFF' },
-          { icon: Shield, title: 'Unified Account Configs', detail: 'GA configurations: PNP, PEP, PNS — choose your architecture', color: '#635BFF' },
+          { icon: Shield, title: 'Connect (Express accounts)', detail: 'Create Express connected accounts with Stripe-hosted onboarding and dashboard', color: '#635BFF' },
+          { icon: Shield, title: 'Direct charges', detail: 'application_fee_amount on the connected account — you\'ll learn this in Module 1', color: '#635BFF' },
           { icon: Terminal, title: 'Stripe Terminal', detail: 'S710 reader in test mode for in-person payment simulation', color: '#00A1C2' },
           { icon: CreditCard, title: 'PayNow (test mode)', detail: 'Singapore QR payment method for local market testing', color: '#30B130' },
         ].map(({ icon: Icon, title, detail, color }, i) => (

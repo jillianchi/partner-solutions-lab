@@ -18,28 +18,31 @@ export default function TrackATask2() {
       </div>
       <h1 className="text-3xl font-bold mb-2" style={{ color: '#0A2540' }}>3A.2: Refund with Clawback</h1>
       <p className="text-lg mb-6" style={{ color: '#425466' }}>
-        When a customer requests a refund, the platform must reverse the customer charge <em>and</em> reclaim the platform fee from the connected account. This is called a "clawback" or "reverse transfer."
+        When a customer requests a refund, the platform typically wants to give up its application fee too — this is the "clawback."
       </p>
 
       <h2 className="text-xl font-semibold mb-3" style={{ color: '#0A2540' }}>The Problem</h2>
       <p className="text-sm mb-4" style={{ color: '#425466' }}>
-        When you refund a destination charge, Stripe refunds the customer from the platform account's balance. But the connected account already received the net funds. To make the platform whole, you must reverse the transfer to the connected account simultaneously.
+        With a direct charge, the connected account is the merchant of record — the charge and its funds already live on that account, there's no transfer to reverse. The refund itself must be created <em>on the connected account</em>, and you separately decide whether the platform keeps or forgoes its application fee.
       </p>
 
       <CodeBlock
         language="javascript"
         filename="server/routes/refunds.js"
         code={`router.post('/refunds', async (req, res) => {
-  const { paymentIntentId, reason = 'requested_by_customer' } = req.body;
+  const { paymentIntentId, merchantId, reason = 'requested_by_customer' } = req.body;
+  const merchant = db.merchants.findById(merchantId);
 
-  // TODO: Create the refund with reverse_transfer=true
-  // This refunds the customer AND reverses the transfer to the connected account
-  const refund = await stripe.refunds.create({
-    payment_intent: paymentIntentId,
-    reason,
-    reverse_transfer: true,     // Reverses the transfer to connected account
-    refund_application_fee: true, // Reclaims the platform fee
-  });
+  // TODO: Create the refund on the connected account
+  // reverse_transfer does NOT apply to direct charges — there is no transfer to reverse
+  const refund = await stripe.refunds.create(
+    {
+      payment_intent: paymentIntentId,
+      reason,
+      refund_application_fee: true, // platform forgoes its fee on this transaction
+    },
+    { stripeAccount: merchant.stripe_account_id }
+  );
 
   res.json({
     refundId: refund.id,
@@ -49,13 +52,13 @@ export default function TrackATask2() {
 });`}
       />
 
-      <Callout type="decision" title="reverse_transfer vs refund_application_fee">
-        <p className="mb-1">Two parameters control what gets clawed back:</p>
+      <Callout type="decision" title="refund_application_fee is your only lever here">
+        <p className="mb-1">Direct charges don't use <code>transfer_data</code>, so <code>reverse_transfer</code> is irrelevant — omitting it (or setting it) has no effect. The only decision is:</p>
         <ul className="space-y-1">
-          <li><strong>reverse_transfer: true</strong> — reverses the funds transferred to the connected account (they pay back the net amount)</li>
-          <li><strong>refund_application_fee: true</strong> — the platform fee is returned to the customer as part of the refund (the platform forgoes its fee income on this transaction)</li>
+          <li><strong>refund_application_fee: true</strong> — the platform's fee is returned to the customer as part of the refund (the platform forgoes its fee income on this transaction)</li>
+          <li><strong>refund_application_fee: false</strong> (default) — the platform keeps its fee; only the merchant's net proceeds are refunded</li>
         </ul>
-        <p className="mt-2">For a full refund where the platform absorbs no cost, use both. For a partial platform goodwill refund, omit <code>refund_application_fee</code>.</p>
+        <p className="mt-2">For a full goodwill refund, set it true. For a partial refund where the platform isn't at fault, consider leaving it false.</p>
       </Callout>
 
       <Checkpoint

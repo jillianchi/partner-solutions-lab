@@ -12,9 +12,9 @@ const nextPage = pages[currentIdx + 1];
 
 const reviewItems = [
   'Stripe Connect enables platforms to route payments between customers, platforms, and connected sub-merchants',
-  'Connected accounts are created via the v2 Accounts API — each merchant gets their own acct_xxx',
-  'Unified Account configurations (PNP, PEP, PNS) determine Dashboard access, pricing control, and liability',
-  'Destination charges are the fund-flow model: platform charges in full, routes a portion to the connected account',
+  'Connected accounts are created via stripe.accounts.create({ type: "express" }) — each merchant gets their own acct_xxx',
+  "Connect account types (Standard, Express, Custom) determine Dashboard access, onboarding, and who's the merchant of record",
+  'Direct charges are the fund-flow model: the connected account charges the customer directly and is the merchant of record; the platform collects an application fee on top',
   'The application_fee_amount parameter captures the platform fee per transaction',
   'Stripe Terminal extends this model to in-person payments — same API, same fund flow, card-present',
   'Webhooks are the source of truth for payment state — never trust client-side redirects for order fulfilment',
@@ -45,12 +45,12 @@ export default function ModuleReview() {
       <div className="space-y-4 mb-8">
         {[
           {
-            q: 'A customer pays $100. The platform fee is $2.50. Stripe fees are $2.50. What does the connected account receive?',
-            a: '$95.00 — the customer payment minus Stripe fees and the platform fee.',
+            q: 'A customer pays $100 on a direct charge. The platform fee is $2.50. Stripe fees are $2.50. What does the connected account receive?',
+            a: '$95.00. With direct charges, the connected account is the merchant of record — Stripe fees are debited from its balance directly, and the application fee is collected on top for the platform.',
           },
           {
-            q: 'Your client wants merchants to have no Stripe Dashboard access but wants Stripe to bear fraud liability. Which UA config?',
-            a: 'PNS — Platform pricing (buy-rate), No merchant dashboard, Stripe bears loss liability. Compare: PNP is the same but Platform bears liability; PEP gives merchants an Express dashboard with Platform liability.',
+            q: 'Your client wants merchants to get their own login to check payouts, without building a merchant-facing dashboard themselves. Which Connect account type?',
+            a: 'Express — it ships with the Express Dashboard (a lightweight, Stripe-hosted view of balance and payouts) with no dashboard build effort. Standard gives merchants Stripe\'s full dashboard and their own Stripe relationship; Custom gives none — you build it all.',
           },
           {
             q: 'What is the difference between a connection token and a client secret in Terminal?',

@@ -19,41 +19,50 @@ export default function Task2OnlinePayment() {
       </div>
       <h1 className="text-3xl font-bold mb-2" style={{ color: '#0A2540' }}>Task 2.2: Online Payment</h1>
       <p className="text-lg mb-6" style={{ color: '#425466' }}>
-        Implement a Checkout Session with a destination charge and platform fee. This is the core online payment flow for both tracks.
+        Implement a Checkout Session as a direct charge on the connected account. The merchant is the merchant of record; the platform collects an application fee on top.
       </p>
 
       <h2 className="text-xl font-semibold mb-3" style={{ color: '#0A2540' }}>Your Task</h2>
       <p className="text-sm mb-4" style={{ color: '#425466' }}>
-        Open <code className="text-xs px-1 py-0.5 rounded" style={{ backgroundColor: '#EEF2FF', color: '#533AFD' }}>server/routes/checkout.js</code> and implement <code className="text-xs px-1 py-0.5 rounded" style={{ backgroundColor: '#EEF2FF', color: '#533AFD' }}>POST /checkout</code>:
+        Open <code className="text-xs px-1 py-0.5 rounded" style={{ backgroundColor: '#EEF2FF', color: '#533AFD' }}>server/routes/payments.js</code> and implement <code className="text-xs px-1 py-0.5 rounded" style={{ backgroundColor: '#EEF2FF', color: '#533AFD' }}>POST /checkout</code>:
       </p>
 
       <CodeBlock
         language="javascript"
-        filename="server/routes/checkout.js — implement this"
+        filename="server/routes/payments.js — implement this"
         code={`router.post('/checkout', async (req, res) => {
-  const { merchantId, amount, description } = req.body;
+  const { merchantId, amount } = req.body;
+  const merchant = db.merchants.findById(merchantId);
 
-  // TODO: Look up the merchant's stripe_account_id from your DB
-  // const merchant = await db.merchants.findById(merchantId)
+  // TODO: Create (or reuse) a 9% GST Tax Rate on the connected account
+  // A static Tax Rate avoids the address-collection friction automatic_tax would require
+  // const gstTaxRateId = await ensureGstTaxRate(merchant)
 
-  // TODO: Calculate platform fee (e.g. 2.5% of amount)
-  // const platformFee = Math.round(amount * 0.025)
+  // TODO: Calculate the platform fee for this checkout
+  // For now use a flat rate — Track A 3A.3 replaces this with a GMV-based tier
+  // const monthlyGmv = await getMonthlyGmv(merchant.stripe_account_id)
+  // const applicationFeeAmount = calculatePlatformFee(amount, monthlyGmv)
 
-  // TODO: Create Checkout Session with destination charge
+  // TODO: Create a Checkout Session directly on the connected account —
+  // pass { stripeAccount: merchant.stripe_account_id } as the second argument.
+  // No transfer_data — funds land on the connected account directly.
   // const session = await stripe.checkout.sessions.create({
   //   mode: 'payment',
-  //   line_items: [{ price_data: { ... }, quantity: 1 }],
+  //   line_items: [{ price_data: { ... }, quantity: 1, tax_rates: [gstTaxRateId] }],
   //   payment_intent_data: {
-  //     application_fee_amount: platformFee,
-  //     transfer_data: { destination: merchant.stripe_account_id },
+  //     application_fee_amount: applicationFeeAmount,
   //   },
   //   success_url: '...',
   //   cancel_url: '...',
-  // })
+  // }, { stripeAccount: merchant.stripe_account_id })
 
   res.json({ url: session.url });
 });`}
       />
+
+      <Callout type="tip" title="GST and fee tiers, detailed elsewhere">
+        Two things are introduced here at a basic level: a 9% GST Tax Rate applied per line item (Singapore requires GST on most F&B and hospitality sales), and a GMV-based fee tier via <code>server/lib/fees.js</code> and <code>server/lib/gmv.js</code>. Track A Task 3A.3 walks through the fee tier logic in depth — here, just wire both in.
+      </Callout>
 
       <L200FundFlow track="a" />
 
@@ -75,7 +84,7 @@ export default function Task2OnlinePayment() {
       </div>
 
       <Callout type="tip" title="Verify the fee split">
-        After a successful test payment, check the PaymentIntent in your Dashboard. Under "Timeline" you should see the transfer to the connected account and the platform fee retained in your platform account.
+        After a successful test payment, check the PaymentIntent on the connected account in your Dashboard (Connect → Accounts → [account] → Payments). Under "Timeline" you should see the application fee collected — it lands directly in your platform's balance since there's no transfer step with direct charges.
       </Callout>
 
       <Checkpoint

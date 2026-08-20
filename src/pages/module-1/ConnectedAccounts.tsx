@@ -25,18 +25,26 @@ export default function ConnectedAccounts() {
 
       <h2 className="text-xl font-semibold mb-3" style={{ color: '#0A2540' }}>Creating a Connected Account</h2>
       <p className="text-sm mb-3" style={{ color: '#425466' }}>
-        In this lab, accounts are created using the v2 Accounts API — the new unified endpoint that replaces the legacy <code className="text-xs px-1 py-0.5 rounded" style={{ backgroundColor: '#EEF2FF', color: '#533AFD' }}>/v1/accounts</code>.
+        In this lab, accounts are created as <strong>Express accounts</strong> — they come with a lightweight, Stripe-hosted dashboard and Stripe-hosted onboarding out of the box.
       </p>
 
       <CodeBlock
         language="javascript"
         filename="server/routes/accounts.js"
-        code={`const account = await stripe.v2.core.accounts.create({
-  display_name: 'The Golden Fork Restaurant',
+        code={`const account = await stripe.accounts.create({
+  type: 'express',
   country: 'SG',
-  configuration: {
-    merchant: {
-      stripe_dashboard: { type: 'none' },  // PNP: platform controls dashboard
+  business_profile: {
+    name: 'The Golden Fork Restaurant',
+    product_description: 'restaurant',
+  },
+  capabilities: {
+    card_payments: { requested: true },
+    transfers: { requested: true },
+  },
+  settings: {
+    payouts: {
+      schedule: { interval: 'manual' }, // platform controls payout timing
     },
   },
 });
@@ -49,7 +57,7 @@ console.log(account.id); // acct_1P...`}
 
       <h2 className="text-xl font-semibold mb-3 mt-6" style={{ color: '#0A2540' }}>Onboarding Your Merchants</h2>
       <p className="text-sm mb-3" style={{ color: '#425466' }}>
-        After creating the account, you typically redirect the merchant through Stripe's hosted onboarding to collect their KYC details. For PNP configurations, this is handled by the platform on behalf of the connected account.
+        After creating the account, you redirect the merchant through Stripe's hosted onboarding to collect their KYC details. Express accounts use an account link — Stripe hosts the entire flow, so you never touch sensitive KYC data directly.
       </p>
 
       <CodeBlock
