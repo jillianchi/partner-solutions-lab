@@ -38,34 +38,34 @@ export default function L200FundFlow({ track }: L200FundFlowProps) {
           <text x="97" y="73" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#0A2540">Initiate Checkout</text>
           <line x1="172" y1="67" x2="201" y2="67" stroke="#533AFD" strokeWidth="1.5" markerEnd="url(#fa)" />
 
-          {/* Step 2: Platform creates session */}
+          {/* Step 2: Platform creates session on the connected account */}
           <rect x="220" y="50" width="155" height="34" rx="4" fill="white" stroke="#FF6118" strokeWidth="1.5" />
-          <text x="297" y="65" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#0A2540">Create Checkout</text>
-          <text x="297" y="78" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#FF6118">Session + fee</text>
+          <text x="297" y="65" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#0A2540">Create Session</text>
+          <text x="297" y="78" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="9" fill="#FF6118">{'{ stripeAccount }'} + fee</text>
           <line x1="377" y1="67" x2="401" y2="67" stroke="#533AFD" strokeWidth="1.5" markerEnd="url(#fa)" />
 
-          {/* Step 3: Stripe charges */}
+          {/* Step 3: Stripe charges directly on the connected account */}
           <rect x="420" y="50" width="155" height="34" rx="4" fill="white" stroke="#533AFD" strokeWidth="1.5" />
           <text x="497" y="65" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#533AFD">Charge: $100.00</text>
-          <text x="497" y="78" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="9" fill="#425466">destination charge</text>
+          <text x="497" y="78" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="9" fill="#425466">direct charge, on acct_xxx</text>
 
-          {/* Split */}
-          <line x1="497" y1="86" x2="497" y2="120" stroke="#533AFD" strokeWidth="1.5" />
-          <line x1="497" y1="120" x2="350" y2="120" stroke="#533AFD" strokeWidth="1" strokeDasharray="3,2" />
-          <line x1="497" y1="120" x2="620" y2="120" stroke="#533AFD" strokeWidth="1.5" markerEnd="url(#fa)" />
+          {/* Direct to connected account — no transfer */}
+          <line x1="575" y1="67" x2="601" y2="67" stroke="#533AFD" strokeWidth="1.5" markerEnd="url(#fa)" />
 
-          {/* Platform fee */}
+          {/* Application fee collected by platform automatically */}
+          <line x1="497" y1="86" x2="497" y2="120" stroke="#533AFD" strokeWidth="1" strokeDasharray="3,2" />
+          <line x1="497" y1="120" x2="350" y2="120" stroke="#533AFD" strokeWidth="1.5" markerEnd="url(#fa)" />
           <rect x="230" y="128" width="155" height="34" rx="4" fill="white" stroke="#FF6118" strokeWidth="1.5" />
-          <text x="307" y="143" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#FF6118">Platform Fee</text>
-          <text x="307" y="156" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="11" fontWeight="600" fill="#FF6118">$2.50</text>
+          <text x="307" y="143" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#FF6118">Application Fee</text>
+          <text x="307" y="156" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="9" fill="#FF6118">$2.50 (auto-collected, no transfer)</text>
 
-          {/* Restaurant receives */}
-          <rect x="620" y="108" width="170" height="34" rx="4" fill="white" stroke="#30B130" strokeWidth="1.5" />
-          <text x="705" y="123" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#30B130">Restaurant Receives</text>
-          <text x="705" y="136" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="11" fontWeight="600" fill="#30B130">$97.50</text>
+          {/* Restaurant's own balance — funds never left the connected account */}
+          <rect x="620" y="50" width="170" height="34" rx="4" fill="white" stroke="#30B130" strokeWidth="1.5" />
+          <text x="705" y="65" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#30B130">Restaurant's Own Balance</text>
+          <text x="705" y="78" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="11" fontWeight="600" fill="#30B130">$97.50</text>
 
           {/* Payout trigger */}
-          <line x1="705" y1="144" x2="705" y2="178" stroke="#FFC01F" strokeWidth="1.5" strokeDasharray="4,3" />
+          <line x1="705" y1="86" x2="705" y2="178" stroke="#FFC01F" strokeWidth="1.5" strokeDasharray="4,3" />
           <rect x="620" y="180" width="170" height="34" rx="4" fill="white" stroke="#FFC01F" strokeWidth="1.5" />
           <text x="705" y="195" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fill="#92400E">Manual Payout</text>
           <text x="705" y="208" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="10" fontWeight="600" fill="#92400E">→ Bank account</text>

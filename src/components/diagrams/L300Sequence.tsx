@@ -18,10 +18,10 @@ interface ScenarioData {
 
 const scenarios: Record<Scenario, ScenarioData> = {
   'account-creation': {
-    title: 'Connected Account Creation',
+    title: 'Connected Account Creation (Express)',
     actors: ['Platform', 'Stripe API', 'Connected Acct'],
     steps: [
-      { from: 0, to: 1, label: 'POST /v2/core/accounts', y: 100 },
+      { from: 0, to: 1, label: "POST /v1/accounts (type: 'express')", y: 100 },
       { from: 1, to: 2, label: 'Account provisioned (acct_xxx)', y: 140 },
       { from: 1, to: 0, label: '{ id: "acct_xxx" }', y: 175, dashed: true },
       { from: 0, to: 1, label: 'POST /v1/account_links (onboarding)', y: 215 },
@@ -29,29 +29,29 @@ const scenarios: Record<Scenario, ScenarioData> = {
     ],
   },
   checkout: {
-    title: 'Checkout Session with Destination Charge',
+    title: 'Checkout Session — Direct Charge',
     actors: ['Customer', 'Platform', 'Stripe API'],
     steps: [
       { from: 0, to: 1, label: 'Initiate checkout', y: 100 },
-      { from: 1, to: 2, label: 'POST /v1/checkout/sessions (destination=acct_xxx)', y: 135 },
+      { from: 1, to: 2, label: 'POST /v1/checkout/sessions { stripeAccount: acct_xxx }', y: 135 },
       { from: 2, to: 1, label: 'session.url returned', y: 170, dashed: true },
       { from: 1, to: 0, label: 'Redirect to Stripe Checkout', y: 205, dashed: true },
-      { from: 0, to: 2, label: 'Customer completes payment', y: 245 },
+      { from: 0, to: 2, label: 'Customer completes payment (charged on acct_xxx)', y: 245 },
       { from: 2, to: 1, label: 'checkout.session.completed webhook', y: 280, dashed: true },
     ],
   },
   terminal: {
-    title: 'Terminal In-Person Payment',
-    actors: ['POS App', 'Platform Server', 'Stripe API', 'S710'],
+    title: 'Terminal In-Person Payment (server-driven)',
+    actors: ['POS / PMS', 'Platform Server', 'Stripe API', 'S710 Reader'],
     steps: [
-      { from: 0, to: 1, label: 'Create payment', y: 90 },
-      { from: 1, to: 2, label: 'POST /v1/payment_intents', y: 120 },
-      { from: 2, to: 1, label: 'client_secret', y: 150, dashed: true },
-      { from: 1, to: 0, label: 'client_secret', y: 180, dashed: true },
-      { from: 0, to: 3, label: 'collectPaymentMethod(client_secret)', y: 210 },
+      { from: 0, to: 1, label: 'Charge amount', y: 90 },
+      { from: 1, to: 2, label: "POST /v1/payment_intents { stripeAccount: acct_xxx }", y: 120 },
+      { from: 2, to: 1, label: 'paymentIntent.id', y: 150, dashed: true },
+      { from: 1, to: 2, label: 'POST readers/:id/process_payment_intent', y: 180 },
+      { from: 2, to: 3, label: 'Push PaymentIntent to reader', y: 210 },
       { from: 3, to: 0, label: 'Card tap / insert', y: 240, dashed: true },
-      { from: 0, to: 2, label: 'confirmPaymentIntent()', y: 270 },
-      { from: 2, to: 0, label: 'payment_intent.succeeded', y: 300, dashed: true },
+      { from: 1, to: 1, label: 'Poll PaymentIntent status', y: 270 },
+      { from: 2, to: 1, label: 'payment_intent.succeeded', y: 305, dashed: true },
     ],
   },
   webhook: {

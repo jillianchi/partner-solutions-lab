@@ -14,15 +14,14 @@ flowchart LR
     end
 
     subgraph PAY["Payment Infrastructure — Stripe"]
-        SC["Stripe Connect\nplatform account"]
-        CHK["Checkout Sessions\nonline payments"]
-        TERM["Terminal\nin-person payments"]
+        CHK["Checkout Sessions\ndirect charge, stripeAccount header"]
+        TERM["Terminal\ndirect charge, card-present"]
         WH["Webhooks\npayment events"]
     end
 
     subgraph SM["Sub-Merchants"]
-        RA["Restaurant A\nconnected account"]
-        RB["Restaurant B\nconnected account"]
+        RA["Restaurant A\nconnected account — merchant of record"]
+        RB["Restaurant B\nconnected account — merchant of record"]
     end
 
     subgraph BK["Banking"]
@@ -35,14 +34,13 @@ flowchart LR
     WEB -->|request| BE
     WALKIN --> S710
     BE --> DB
-    BE -->|API call| SC
-    BE -->|API call| CHK
+    BE -->|API call, on behalf of RA| CHK
+    BE -->|API call, on behalf of RB| CHK
     WH -->|event| BE
     S710 -->|card present| TERM
-    TERM --> SC
-    CHK --> SC
-    SC -->|transfer| RA
-    SC -->|transfer| RB
+    TERM -->|charge lands on| RA
+    CHK -->|charge lands on| RA
+    CHK -->|charge lands on| RB
     WH -.->|webhook| BE
     RA -->|payout| BA
     RB -->|payout| BB
